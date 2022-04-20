@@ -35,7 +35,7 @@ To start the example simulation launch file, execute the following command:
 roslaunch robile_ros_navigation simulation.launch
 ~~~
 
-It will load a 3x3 robile brick configuration with four active wheel and a SICK laser scanner inside a square room.
+It will load a 3x3 ROBILE brick configuration with four active wheel and a SICK laser scanner inside a square room.
 The modification of the robot configuration and the simulation environment is explained in the tutorial section.
 
 To start the robile_ros_navigation with kelo_tulip driver, launch:
@@ -44,7 +44,7 @@ To start the robile_ros_navigation with kelo_tulip driver, launch:
 roslaunch robile_ros_navigation robot.launch
 ~~~
 
-The default configuration is based on 3x3 robile brick configuration with four active wheel.
+The default configuration is based on 3x3 ROBILE brick configuration with four active wheel.
 Please make sure that the wheel configuration in kelo_tulip has been set properly.
 For more information on the configuration file, please read the documentation of [kelo_tulip](https://github.com/kelo-robotics/kelo_tulip)
 
@@ -69,10 +69,9 @@ Please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robo
 
 Here are the steps needed to add a new sensor to the robot model:
 1. copy the sensor xacro file to desired ros package. The LMS1xx xacro file used on the default robot can be found in robile_description/urdf/sensors.
-2. add the sensor to the custom ROBILE xacro file created at step-1. The xacro file of the default 3x3 robile with a SICK scanner can be used as an example.
-It can be found in robile_description/robots/4_wheel_lidar_config.urdf.xacro.
-3. replace the xacro file used by "robot_description" in robot.launch and simulation.launch inside robile_ros_navigation/launch/ with the custom ROBILE xacro file.
-4. edit the costmap_common_params.yaml inside robile_ros_navigation/config folder to use the correct sensor configuration.
+2. add the sensor to the custom ROBILE xacro file created at step-1. The xacro file of the [3x3 ROBILE with a SICK scanner](https://github.com/kelo-robotics/robile_description.git/robots/4_wheel_lidar_config.urdf.xacro) can be used as an example.
+3. replace the xacro file used by "robot_description" in [robot.launch](launch/robot.launch) and [simulation.launch](launch/simulation.launch) with the custom ROBILE xacro file.
+4. edit the [costmap_common_params.yaml](config/costmap_common_params.yaml) so it uses the correct sensor configuration.
 
 For the real robot, make sure to install the sensor driver and include the driver launch file to robile_ros_navigation/launch/robot.launch.
 
@@ -115,11 +114,11 @@ The stl file can be created by extruding the 2D image of the map. The procedure 
 10. Press ‘tab’ to enter the edit mode.
 11. Press ‘a’ to select the map and then ‘e’ to extrude.
 12. Move the mouse to change the width of the extrusion and then left click.
-13. Save the extruded map as .stl file and copy it to the robile_ros_navigation/map folder.
+13. Save the extruded map as .stl file and copy it to the [map](map/) folder.
 
 Then copy the empty.world file and rename it with the new map name and change the model to the new stl file.
 
-## Step-3: Change the loaded map in the launch file
+### Step-3: Change the loaded map in the launch file
 
 For real robot, simply update the "_map" argument in robot.launch.
 Meanwhile for simulation, update _map, _gazebo_world_path, _gazebo_world arguments in simulation.launch.
