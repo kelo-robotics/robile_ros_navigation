@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="_map" value="$(find robile_ros_navigation)/map/empty.yaml" />
+    <arg name="_gazebo_world_path" value="$(find robile_ros_navigation)/map" />
+    <arg name="_gazebo_world" value="empty.world" />
+    <arg name="_rviz_config" value="$(find robile_ros_navigation)/config/move_base.rviz" />
+	
+    <include file="$(find robile_gazebo)/launch/4_wheel_lidar_platform.launch">
+        <arg name="gazebo_world_path" value="$(arg _gazebo_world_path)" />
+        <arg name="gazebo_world" value="$(arg _gazebo_world)" />
+        <arg name="rviz_config" value="$(arg _rviz_config)" />
+    </include>
+    
+    <include file="$(find robile_ros_navigation)/launch/move_base.launch">
+        <arg name="map" value="$(arg _map)" />
+    </include>
+</launch>

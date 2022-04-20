@@ -1,0 +1,17 @@
+<package>
+    <name>robile_ros_navigation</name>
+    <version>1.0.0</version>
+    <description>The robile_ros_navigation package</description>
+
+    <maintainer email="tan@locomotec.com">Leonardo Tan</maintainer>
+
+    <license>LGPL2.1/BSD</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>roscpp</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>move_base</build_depend>
+
+    <run_depend>roscpp</run_depend>
+</package>

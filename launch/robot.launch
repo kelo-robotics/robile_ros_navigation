@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="_map" value="$(find robile_ros_navigation)/map/empty.yaml" />
+    
+    <include file="$(find kelo_tulip)/launch/example_joypad.launch" />
+    <include file="$(find robile_ros_navigation)/launch/sensors/sick_lms1xx.launch"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro '$(find robile_description)/robots/4_wheel_lidar_config.urdf.xacro'"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" type="string" value="" />
+    </node>
+
+    <include file="$(find robile_ros_navigation)/launch/move_base.launch" />
+</launch>
+

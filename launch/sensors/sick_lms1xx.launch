@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="name" default="lms1xx" />
+	<arg name="host" default="192.168.1.35" />
+	<arg name="scan_topic" default="/base_scan" />
+	<arg name="frame_id" default="base_laser_front_link" />
+
+	<node pkg="lms1xx" name="$(arg name)" type="LMS1xx_node" output="screen">
+		<param name="frame_id" type="string" value="$(arg frame_id)" />
+		<param name="host" value="$(arg host)" />
+		<remap from="/scan" to="$(arg scan_topic)"/>
+	</node>
+</launch>
