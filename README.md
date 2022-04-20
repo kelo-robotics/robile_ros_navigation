@@ -31,8 +31,8 @@ catkin build robile_gazebo
 cd ~/<CATKIN_WORKSPACE>/src
 git clone 
 git clone https://github.com/kelo-robotics/robile_ros_navigation.git
-
 catkin build robile_navigation
+
 source ~/catkin_ws/devel/setup.bash
 ~~~
 
