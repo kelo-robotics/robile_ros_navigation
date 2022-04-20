@@ -46,7 +46,7 @@ roslaunch robile_ros_navigation robot.launch
 
 The default configuration is based on 3x3 ROBILE brick configuration with four active wheel.
 Please make sure that the wheel configuration in kelo_tulip has been set properly.
-For more information on the configuration file, please read the documentation of [kelo_tulip](https://github.com/kelo-robotics/kelo_tulip)
+For more information on the configuration file, please read the documentation of [kelo_tulip](https://github.com/kelo-robotics/kelo_tulip).
 
 For a real robot it is also possible to drive or override the robot using a joystick.
 The control is as follows:
@@ -118,12 +118,12 @@ The stl file can be created by extruding the 2D image of the map. The procedure 
 12. Move the mouse to change the width of the extrusion and then left click.
 13. Save the extruded map as .stl file and copy it to the [map](map/) folder.
 
-Then copy the empty.world file and rename it with the new map name and change the model to the new stl file.
+Then copy the [empty.world](map/empty.world) file and rename it with the new map name and change the model to the new stl file.
 
 ### Step-3: Change the loaded map in the launch file
 
 For real robot, simply update the "_map" argument in robot.launch.
-Meanwhile for simulation, update _map, _gazebo_world_path, _gazebo_world arguments in simulation.launch.
+Meanwhile for simulation, update "_map", "_gazebo_world_path", "_gazebo_world" arguments in simulation.launch.
 
 
 
