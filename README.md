@@ -16,9 +16,18 @@ sudo apt install ros-$ROS_DISTRO-navigation ros-$ROS_DISTRO-joy
 
 Then install robile_gazebo package from KELO-robotics github.
 Please follow the instruction to install [robile_gazebo](https://github.com/kelo-robotics/robile_gazebo.git) and its dependencies.
+Afterwards, change the branch of [robile_description](https://github.com/kelo-robotics/robile_description.git) and [robile_gazebo](https://github.com/kelo-robotics/robile_gazebo.git) to "move_base".
 Finally, install the robile_ros_navigation package using the following steps:
 
 ~~~ sh
+cd ~/<CATKIN_WORKSPACE>/src/robile_description
+git checkout move_base
+catkin build robile_description
+
+cd ~/<CATKIN_WORKSPACE>/src/robile_gazebo
+git checkout move_base
+catkin build robile_gazebo
+
 cd ~/<CATKIN_WORKSPACE>/src
 git clone 
 git clone https://github.com/kelo-robotics/robile_ros_navigation.git
