@@ -73,16 +73,17 @@ Here are the steps needed to add a new sensor to the robot model:
 3. replace the xacro file used by "robot_description" in [robot.launch](launch/robot.launch) and [simulation.launch](launch/simulation.launch) with the custom ROBILE xacro file.
 4. edit the [costmap_common_params.yaml](config/costmap_common_params.yaml) so it uses the correct sensor configuration.
 
-For the real robot, make sure to install the sensor driver and include the driver launch file to robile_ros_navigation/launch/robot.launch.
+For the real robot, make sure to install the sensor driver and include the driver launch file to [robot.launch](launch/robot.launch).
 
 For simulation, edit robile_ros_navigation/launch/simulation.launch so it uses the new launch file for the custom ROBILE.
 
 ### Step-3: Update the robot footprint
 
-Update the footprint for move_base in robile_navigation/config/move_base_params.yaml to fit the custom ROBILE platform.
+Update the footprint for move_base in [move_base_params.yaml](config/move_base_params.yaml) to fit the custom ROBILE platform.
 As a convention, the front side of the robot is the positive x-axis and the left side of the robot is the positive y-axis.
 The footprint consists of a series of points (x, y) which are ordered sequentially. Here is an example of the footprint:
 
+~~~
 footprint: [[0.3345, 0.223],
             [0.3345, 0.1],
             [0.55, 0.1],
@@ -91,13 +92,14 @@ footprint: [[0.3345, 0.223],
             [0.3345, -0.223],
             [-0.3345, -0.223],
             [-0.3345, 0.223]]
+~~~
 
 ## TUTORIAL: Adding a new map
 
 ### Step-1: Create a 2D map of the new environment
 
 Please follow the tutorial for [creating a 2D map using gmapping from a recorded bagfile](http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData).
-Once the map is created, copy the yaml and pgm file into robile_ros_navigation/map folder.
+Once the map is created, copy the yaml and pgm file into [map](map/) folder.
 
 ### Step-2: Create world and stl file of the map (Simulation only)
 
