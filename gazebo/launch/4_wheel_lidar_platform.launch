@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!--
+        Mandatory arguments to specify the platform configuration and hub 
+        wheel controller list
+    -->
+    <arg name="platform_config" value="4_wheel_lidar_config"/>
+    <arg name="hub_wheel_controller_list" 
+         value="robile_2_left_hub_wheel_controller
+                robile_2_right_hub_wheel_controller
+                robile_6_left_hub_wheel_controller
+                robile_6_right_hub_wheel_controller
+                robile_5_left_hub_wheel_controller
+                robile_5_right_hub_wheel_controller
+                robile_1_left_hub_wheel_controller
+                robile_1_right_hub_wheel_controller" />
+    
+    <arg name="gazebo_world_path" default="worlds"/>
+    <arg name="gazebo_world" default="empty.world"/>
+    <arg name="rviz_config" default="$(find robile_ros_navigation)/gazebo/config/rviz/robile.rviz"/>
+
+    <!--
+        Several Optional arguments can be passed.
+        Check the below launch file for full list of available arguments
+    -->
+    <include file="$(find robile_ros_navigation)/gazebo/launch/robile_gazebo.launch" pass_all_args="true"/>
+
+</launch>
