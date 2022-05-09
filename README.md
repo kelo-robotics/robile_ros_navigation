@@ -20,18 +20,9 @@ Afterwards, change the branch of [robile_description](https://github.com/kelo-ro
 Finally, install the robile_ros_navigation package using the following steps:
 
 ~~~ sh
-cd ~/<CATKIN_WORKSPACE>/src/robile_description
-git checkout move_base
-catkin build robile_description
-
-cd ~/<CATKIN_WORKSPACE>/src/robile_gazebo
-git checkout move_base
-catkin build robile_gazebo
-
 cd ~/<CATKIN_WORKSPACE>/src
-git clone 
 git clone https://github.com/kelo-robotics/robile_ros_navigation.git
-catkin build robile_navigation
+catkin build robile_ros_navigation
 
 source ~/catkin_ws/devel/setup.bash
 ~~~
