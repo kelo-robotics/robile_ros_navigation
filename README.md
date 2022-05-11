@@ -15,8 +15,8 @@ sudo apt install ros-$ROS_DISTRO-navigation ros-$ROS_DISTRO-joy
 ~~~
 
 Then install robile_gazebo package from KELO-robotics github.
-Please follow the instruction to install [robile_gazebo](https://github.com/kelo-robotics/robile_gazebo.git) and its dependencies.
-Afterwards, change the branch of [robile_description](https://github.com/kelo-robotics/robile_description.git) and [robile_gazebo](https://github.com/kelo-robotics/robile_gazebo.git) to "move_base".
+Please follow the instruction to install [robile_gazebo](https://github.com/kelo-robotics/robile_gazebo.git) and its dependencies
+([robile_description](https://github.com/kelo-robotics/robile_description.git) and [kelo_tulip](https://github.com/kelo-robotics/kelo_tulip.git)).
 Finally, install the robile_ros_navigation package using the following steps:
 
 ~~~ sh
@@ -35,10 +35,12 @@ To start the example simulation launch file, execute the following command:
 roslaunch robile_ros_navigation simulation.launch
 ~~~
 
-It will load a 3x3 ROBILE brick configuration with four active wheel and a SICK laser scanner inside a square room.
+It will load a 3x3 ROBILE brick configuration with four active wheel that is equipped with a 2D datalogic laser scanner inside a large square room.
 The modification of the robot configuration and the simulation environment is explained in the tutorial section.
 
-To start the robile_ros_navigation with kelo_tulip driver, launch:
+
+For real robot example launch file, first add the sensor driver launch file to [robot.launch](examples/real_robot/launch/robot.launch?plain=1#L7).
+Then start the robile_ros_navigation with:
 
 ~~~ sh
 roslaunch robile_ros_navigation robot.launch
@@ -48,7 +50,7 @@ The default configuration is based on 3x3 ROBILE brick configuration with four a
 Please make sure that the wheel configuration in kelo_tulip has been set properly.
 For more information on the configuration file, please read the documentation of [kelo_tulip](https://github.com/kelo-robotics/kelo_tulip).
 
-For a real robot it is also possible to drive or override the robot using a joystick.
+When using kelo_tulip as the driver it is also possible to drive or override the robot using a joystick.
 The control is as follows:
 - RB: safety switch. This button needs to be pressed so the joystick command can be active.
 - left analog stick: controls linear velocity of the robot.
@@ -61,25 +63,30 @@ Please make sure that the navigation command has been canceled.
 
 In this section we describe the procedure to create a custom ROBILE platform configurations.
 
-### Step-1: Build a custom ROBILE platform configuration
+### Step-1: 
+For custom ROBILE simulation, simply copy the [gazebo_simulation](examples/gazebo_simulation) folder, rename the directory and the [simulaton.launch](examples/gazebo_simulation/launch/simulation.launch) file in the new directory. 
+
+
+
+### Step-2: Build a custom ROBILE platform configuration
 
 Please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robotics/robile_gazebo) tutorial.
 
-### Step-2: Add sensors on the robot model
+### Step-3: Add sensors on the robot model
 
 Here are the steps needed to add a new sensor to the robot model:
-1. copy the sensor xacro file to desired ros package. The LMS1xx xacro file used on the default robot can be found in robile_description/urdf/sensors.
+1. copy the sensor xacro file to desired ros package. The datalogic.urdf.xacro file used on the default robot can be found in robile_description/urdf/sensors.
 2. add the sensor to the custom ROBILE xacro file created at step-1. The xacro file of the [3x3 ROBILE with a SICK scanner](https://github.com/kelo-robotics/robile_description.git/robots/4_wheel_lidar_config.urdf.xacro) can be used as an example.
 3. replace the xacro file used by "robot_description" in [robot.launch](launch/robot.launch) and [simulation.launch](launch/simulation.launch) with the custom ROBILE xacro file.
 4. edit the [costmap_common_params.yaml](config/costmap_common_params.yaml) so it uses the correct sensor configuration.
 
-For the real robot, make sure to install the sensor driver and include the driver launch file to [robot.launch](launch/robot.launch).
+For real robot, install the sensor driver and include the driver launch file to [robot.launch](launch/robot.launch).
 
 For simulation, edit robile_ros_navigation/launch/simulation.launch so it uses the new launch file for the custom ROBILE.
 
-### Step-3: Update the robot footprint
+### Step-4: Update the robot footprint
 
-Update the footprint for move_base in [move_base_params.yaml](config/move_base_params.yaml) to fit the custom ROBILE platform.
+Update the footprint for move_base in [move_base_params.yaml](examples/gazebo_simulation/config/move_base_params.yaml) to fit the custom ROBILE platform.
 As a convention, the front side of the robot is the positive x-axis and the left side of the robot is the positive y-axis.
 The footprint consists of a series of points (x, y) which are ordered sequentially. Here is an example of the footprint:
 
@@ -116,14 +123,14 @@ The stl file can be created by extruding the 2D image of the map. The procedure 
 10. Press ‘tab’ to enter the edit mode.
 11. Press ‘a’ to select the map and then ‘e’ to extrude.
 12. Move the mouse to change the width of the extrusion and then left click.
-13. Save the extruded map as .stl file and copy it to the [map](map/) folder.
+13. Save the extruded map as .stl file and copy it to desired simulation project map folder.
 
 Then copy the [empty.world](map/empty.world) file and rename it with the new map name and change the model to the new stl file.
 
 ### Step-3: Change the loaded map in the launch file
 
-For real robot, simply update the "_map" argument in robot.launch.
-Meanwhile for simulation, update "_map", "_gazebo_world_path", "_gazebo_world" arguments in simulation.launch.
+For real robot, simply update the "map" argument in robot.launch.
+Meanwhile for simulation, update "map", "gazebo_world_path", "gazebo_world" arguments in simulation.launch.
 
 
 
