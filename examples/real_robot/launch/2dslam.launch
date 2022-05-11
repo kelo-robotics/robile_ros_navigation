@@ -3,7 +3,7 @@
 	<!-- launch gmapping -->
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
 		<remap from="scan" to="base_scan"/>
-		<param name="base_frame" value="base_footprint"/>
+		<param name="base_frame" value="base_link"/>
 		<param name="map_frame" value="map"/>
 		<param name="odom_frame" value="odom"/>
 		<param name="map_update_interval" value="5.0"/>			<!-- How long (in seconds) between updates to the map. Lowering this number updates the occupancy grid more often, at the expense of greater computational load -->
