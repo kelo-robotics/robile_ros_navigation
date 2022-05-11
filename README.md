@@ -63,24 +63,24 @@ Please make sure that the navigation command has been canceled.
 
 In this section we describe the procedure to create a custom ROBILE platform configurations.
 
-### Step-1: Create a new project folder
+### Step-1: Create a new platform folder
 
-Here are the steps to create a new simulation project:
+Here are the steps to create a new simulation platform:
 1. Copy the [gazebo_simulation](examples/gazebo_simulation) folder and rename it.
-2. Rename the simulation.launch inside the new project to avoid duplicate.
-3. Update all file paths in simulation.launch and move_base.launch inside the new project so it uses the new folder path.
+2. Rename the simulation.launch inside the new folder to avoid name duplication.
+3. Update all file paths in simulation.launch and move_base.launch inside the new platform folder.
 
-Here are the steps to create a new real robot project:
+Here are the steps to create a new real robot platform:
 1. Copy the [real_robot](examples/real_robot) folder and rename it.
-2. Rename the robot.launch inside the new project to avoid duplicate.
-3. Update all file paths in robot.launch and move_base.launch inside the new project so it uses the new folder path.
+2. Rename the robot.launch inside the new folder to avoid name duplication.
+3. Update all file paths in robot.launch and move_base.launch inside the new platform folder.
 
 ### Step-2: Build a custom ROBILE model
 
 Here are the steps to create a custom ROBILE model:
 1. Please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robotics/robile_gazebo) tutorial to create the custom ROBILE model.
 2. Once the new model is created, update the "platform_name" argument in simulation.launch and make sure that the parameters in the configuration files matched the model.
-3. Replace the xacro file used by "robot_description" in robot.launch or simulation.launch inside the new project with the custom ROBILE xacro file created in Step-2.
+3. Replace the xacro file used by "robot_description" in robot.launch or simulation.launch inside the new platform folder with the custom ROBILE xacro file created in Step-2.
 
 ### Step-3: Add sensors on the robot model
 
@@ -117,9 +117,9 @@ A simple 3D model (stl) can be created by extruding the 2D image of the map. The
 10. Press ‘tab’ to enter the edit mode.
 11. Press ‘a’ to select the map and then ‘e’ to extrude.
 12. Move the mouse to change the width of the extrusion and then left click.
-13. Save the extruded map as .stl file and copy it to desired simulation project map folder.
+13. Save the extruded map as .stl file and copy it to desired simulation platform map folder.
 
-Then copy the empty.xacro file inside the new project and rename it with the new map name and change the model to the new stl file.
+Then copy the empty.xacro file inside the new platform folder and rename it with the new map name and change the model to the new stl file.
 
 ### Step-3: Change the loaded map in the launch file
 
