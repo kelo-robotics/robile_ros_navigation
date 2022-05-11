@@ -63,8 +63,19 @@ Please make sure that the navigation command has been canceled.
 
 In this section we describe the procedure to create a custom ROBILE platform configurations.
 
-### Step-1: 
-For custom ROBILE simulation, simply copy the [gazebo_simulation](examples/gazebo_simulation) folder, rename the directory and the [simulaton.launch](examples/gazebo_simulation/launch/simulation.launch) file in the new directory. 
+### Step-1: Create a new project folder
+
+Here is the steps to create a new simulation project:
+1. copy the [gazebo_simulation](examples/gazebo_simulation) folder and rename it.
+2. rename the [simulation.launch](examples/gazebo_simulation/launch/simulation.launch).
+3. update the file path in [simulation.launch](examples/gazebo_simulation/launch/simulation.launch?plain=1#L12, L15, L30, L37)
+
+
+
+1. copy the [real_robot](examples/real_robot) folder and rename it.
+
+
+, rename the directory and the [simulaton.launch](examples/gazebo_simulation/launch/simulation.launch) file in the new directory. 
 
 
 
@@ -75,9 +86,9 @@ Please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robo
 ### Step-3: Add sensors on the robot model
 
 Here are the steps needed to add a new sensor to the robot model:
-1. copy the sensor xacro file to desired ros package. The datalogic.urdf.xacro file used on the default robot can be found in robile_description/urdf/sensors.
+1. copy the sensor xacro file to desired ros package. The datalogic.urdf.xacro file used on the default robot can be found in [robile_description/urdf/sensors](https://github.com/kelo-robotics/robile_description.git/urdf/sensors).
 2. add the sensor to the custom ROBILE xacro file created at step-1. The xacro file of the [3x3 ROBILE with a SICK scanner](https://github.com/kelo-robotics/robile_description.git/robots/4_wheel_lidar_config.urdf.xacro) can be used as an example.
-3. replace the xacro file used by "robot_description" in [robot.launch](launch/robot.launch) and [simulation.launch](launch/simulation.launch) with the custom ROBILE xacro file.
+3. replace the xacro file used by "robot_description" in [robot.launch](examples/real_robot/launch/robot.launch) and [simulation.launch](examples/gazebo_simulation/launch/simulation.launch) with the custom ROBILE xacro file.
 4. edit the [costmap_common_params.yaml](config/costmap_common_params.yaml) so it uses the correct sensor configuration.
 
 For real robot, install the sensor driver and include the driver launch file to [robot.launch](launch/robot.launch).
