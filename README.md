@@ -35,7 +35,7 @@ To start the example simulation launch file, execute the following command:
 roslaunch robile_ros_navigation simulation.launch
 ~~~
 
-It will load a 3x3 ROBILE brick configuration with four active wheel that is equipped with a 2D datalogic laser scanner inside a large square room.
+It will load a 3x3 ROBILE brick configuration with four active wheel with a datalogic laser scanner inside a large square room.
 The modification of the robot configuration and the simulation environment is explained in the tutorial section.
 
 
@@ -100,7 +100,7 @@ The footprint consists of a series of points (x, y) which are ordered sequential
 ### Step-1: Create a 2D map of the new environment
 
 Please follow the tutorial for [creating a 2D map using gmapping from a recorded bagfile](http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData).
-Once the map is created, copy the yaml and pgm file to the map folder of the project.
+Once the map is created, copy the yaml and pgm file to the map folder.
 
 ### Step-2: Create xacro and stl file of the map (Simulation only)
 
