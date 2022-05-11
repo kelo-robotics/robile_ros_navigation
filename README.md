@@ -53,8 +53,8 @@ For more information on the configuration file, please read the documentation of
 When using kelo_tulip as the driver it is also possible to drive or override the robot using a joystick.
 The control is as follows:
 - RB: safety switch. This button needs to be pressed so the joystick command can be active.
-- left analog stick: controls linear velocity of the robot.
-- right analog stick: controls rotation velocity of the robot.
+- Left analog stick: controls linear velocity of the robot.
+- Right analog stick: controls rotation velocity of the robot.
 
 Note: the robot will immediately use the velocity command from ROS Navigation once the RB button was released.
 Please make sure that the navigation command has been canceled.
@@ -65,63 +65,46 @@ In this section we describe the procedure to create a custom ROBILE platform con
 
 ### Step-1: Create a new project folder
 
-Here is the steps to create a new simulation project:
-1. copy the [gazebo_simulation](examples/gazebo_simulation) folder and rename it.
-2. rename the [simulation.launch](examples/gazebo_simulation/launch/simulation.launch).
-3. update the file path in [simulation.launch](examples/gazebo_simulation/launch/simulation.launch?plain=1#L12, L15, L30, L37)
+Here are the steps to create a new simulation project:
+1. Copy the [gazebo_simulation](examples/gazebo_simulation) folder and rename it.
+2. Rename the simulation.launch inside the new project to avoid duplicate.
+3. Update all file paths in simulation.launch and move_base.launch inside the new project so it uses the new folder path.
 
+Here are the steps to create a new real robot project:
+1. Copy the [real_robot](examples/real_robot) folder and rename it.
+2. Rename the robot.launch inside the new project to avoid duplicate.
+3. Update all file paths in robot.launch and move_base.launch inside the new project so it uses the new folder path.
 
+### Step-2: Build a custom ROBILE model
 
-1. copy the [real_robot](examples/real_robot) folder and rename it.
-
-
-, rename the directory and the [simulaton.launch](examples/gazebo_simulation/launch/simulation.launch) file in the new directory. 
-
-
-
-### Step-2: Build a custom ROBILE platform configuration
-
-Please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robotics/robile_gazebo) tutorial.
+Here are the steps to create a custom ROBILE model:
+1. Please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robotics/robile_gazebo) tutorial to create the custom ROBILE model.
+2. Once the new model is created, update the "platform_name" argument in simulation.launch and make sure that the parameters in the configuration files matched the model.
+3. Replace the xacro file used by "robot_description" in robot.launch or simulation.launch inside the new project with the custom ROBILE xacro file created in Step-2.
 
 ### Step-3: Add sensors on the robot model
 
 Here are the steps needed to add a new sensor to the robot model:
-1. copy the sensor xacro file to desired ros package. The datalogic.urdf.xacro file used on the default robot can be found in [robile_description/urdf/sensors](https://github.com/kelo-robotics/robile_description.git/urdf/sensors).
-2. add the sensor to the custom ROBILE xacro file created at step-1. The xacro file of the [3x3 ROBILE with a SICK scanner](https://github.com/kelo-robotics/robile_description.git/robots/4_wheel_lidar_config.urdf.xacro) can be used as an example.
-3. replace the xacro file used by "robot_description" in [robot.launch](examples/real_robot/launch/robot.launch) and [simulation.launch](examples/gazebo_simulation/launch/simulation.launch) with the custom ROBILE xacro file.
-4. edit the [costmap_common_params.yaml](config/costmap_common_params.yaml) so it uses the correct sensor configuration.
-
-For real robot, install the sensor driver and include the driver launch file to [robot.launch](launch/robot.launch).
-
-For simulation, edit robile_ros_navigation/launch/simulation.launch so it uses the new launch file for the custom ROBILE.
+1. Copy the sensor xacro file to desired ros package. The default location file used in the example is in [robile_description/urdf/sensors](https://github.com/kelo-robotics/robile_description.git/urdf/sensors).
+2. Add the sensor to the custom ROBILE xacro file created at Step-1. [4_wheel_lidar_config.urdf.xacro](https://github.com/kelo-robotics/robile_description.git/robots/4_wheel_lidar_config.urdf.xacro) can be used as an example.
+3. Edit the [costmap_common_params.yaml](config/costmap_common_params.yaml) so it uses the correct sensor configuration.
 
 ### Step-4: Update the robot footprint
 
-Update the footprint for move_base in [move_base_params.yaml](examples/gazebo_simulation/config/move_base_params.yaml) to fit the custom ROBILE platform.
+Update the footprint of the robot in move_base_params.yaml inside the config folder so it fits the custom ROBILE platform.
 As a convention, the front side of the robot is the positive x-axis and the left side of the robot is the positive y-axis.
-The footprint consists of a series of points (x, y) which are ordered sequentially. Here is an example of the footprint:
-
-~~~
-footprint: [[0.3345, 0.223],
-            [0.3345, 0.1],
-            [0.55, 0.1],
-            [0.55, -0.1],
-            [0.3345, -0.1],
-            [0.3345, -0.223],
-            [-0.3345, -0.223],
-            [-0.3345, 0.223]]
-~~~
+The footprint consists of a series of points (x, y) which are ordered sequentially.
 
 ## TUTORIAL: Adding a new map
 
 ### Step-1: Create a 2D map of the new environment
 
 Please follow the tutorial for [creating a 2D map using gmapping from a recorded bagfile](http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData).
-Once the map is created, copy the yaml and pgm file into [map](map/) folder.
+Once the map is created, copy the yaml and pgm file to the map folder of the project.
 
-### Step-2: Create world and stl file of the map (Simulation only)
+### Step-2: Create xacro and stl file of the map (Simulation only)
 
-The stl file can be created by extruding the 2D image of the map. The procedure is as follows:
+A simple 3D model (stl) can be created by extruding the 2D image of the map. The procedure is as follows:
 1. Open inkscape and import the pgm file of the 2D map.
 2. Select the image and then click path -> trace bitmap and then press ‘OK’.
 3. Now the lines of the wall should be created. Remove the 2D map so only the wall lines are left.
@@ -136,12 +119,12 @@ The stl file can be created by extruding the 2D image of the map. The procedure 
 12. Move the mouse to change the width of the extrusion and then left click.
 13. Save the extruded map as .stl file and copy it to desired simulation project map folder.
 
-Then copy the [empty.world](map/empty.world) file and rename it with the new map name and change the model to the new stl file.
+Then copy the empty.xacro file inside the new project and rename it with the new map name and change the model to the new stl file.
 
 ### Step-3: Change the loaded map in the launch file
 
-For real robot, simply update the "map" argument in robot.launch.
-Meanwhile for simulation, update "map", "gazebo_world_path", "gazebo_world" arguments in simulation.launch.
+For real robot simply update the "map" argument in robot.launch to use the new map.
+Meanwhile for simulation, update "world_model_name" argument in simulation.launch.
 
 
 
