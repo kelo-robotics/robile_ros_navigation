@@ -1,17 +1,39 @@
-<package>
-    <name>robile_ros_navigation</name>
-    <version>1.0.0</version>
-    <description>The robile_ros_navigation package</description>
+<?xml version="1.0"?>
+<package format="3">
+  <name>robile_ros_navigation</name>
+  <version>1.0.0</version>
+  <description>The robile_ros_navigation package</description>
 
-    <maintainer email="tan@locomotec.com">Leonardo Tan</maintainer>
+  <maintainer email="tan@locomotec.com">Leonardo Tan</maintainer>
 
-    <license>LGPL2.1/BSD</license>
+  <license>LGPL-2.1 AND BSD</license>
 
-    <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-    <build_depend>roscpp</build_depend>
-    <build_depend>geometry_msgs</build_depend>
-    <build_depend>move_base</build_depend>
+  <depend>rclcpp</depend>
+  <depend>kelo_tulip</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>visualization_msgs</depend>
 
-    <run_depend>roscpp</run_depend>
+  <build_depend>launch</build_depend>
+  <build_depend>launch_ros</build_depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>navigation2</exec_depend>
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>joy_linux</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robile_description</exec_depend>
+  <exec_depend>sick_safetyscanners2</exec_depend>
+  <exec_depend>ira_laser_tools</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>
