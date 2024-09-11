@@ -1,30 +1,40 @@
 # robile_ros_navigation
 
-ROS Navigation for KELO ROBILE robots
+ROS 2 Navigation for KELO ROBILE (tested on ROS Humble). 
+For ROS 1 version please read the README.md file in the master branch.
 
 ## Installation
 Here are the required packages for robile_ros_navigation package:
-- ros-navigation
+- ROS 2 Navigation
 - robile_gazebo
-- joy (optional)
+- kelo_tulip
+- sick_microscanner2
+- ira_laser_tools
+- joy
 
-First install ros-navigation and joy using the following command:
+First install the robile packages and ira_laser_tools from github by replacing <WORKSPACE_DIR> with the correct ros workspace path:
 
 ~~~ sh
-sudo apt install ros-$ROS_DISTRO-navigation ros-$ROS_DISTRO-joy
+cd <WORKSPACE_DIR>/src
+git clone -b humble https://github.com/nakai-omer/ira_laser_tools.git
+git clone https://github.com/kelo-robotics/robile_description.git
+git clone -b ros2-develop https://github.com/kelo-robotics/kelo_tulip.git
+git clone -b ros2-develop https://github.com/kelo-robotics/robile_gazebo.git
+git clone -b ros2-develop https://github.com/kelo-robotics/robile_ros_navigation.git
 ~~~
 
-Then install robile_gazebo package from KELO-robotics github.
-Please follow the instruction to install [robile_gazebo](https://github.com/kelo-robotics/robile_gazebo.git) and its dependencies
-([robile_description](https://github.com/kelo-robotics/robile_description.git) and [kelo_tulip](https://github.com/kelo-robotics/kelo_tulip.git)).
-Finally, install the robile_ros_navigation package using the following steps:
+Next install the remaining dependencies using rosdep:
 
 ~~~ sh
-cd ~/<CATKIN_WORKSPACE>/src
-git clone https://github.com/kelo-robotics/robile_ros_navigation.git
-catkin build robile_ros_navigation
+rosdep install --from-paths src -y --ignore-src
+~~~
 
-source ~/catkin_ws/devel/setup.bash
+Finally compile the packages inside the ros workspace with the following commands by replacing <WORKSPACE_DIR> with the correct ros workspace path: 
+
+~~~ sh
+cd <WORKSPACE_DIR>
+colcon build
+source ~/<WORKSPACE>/install/local_setup.bash
 ~~~
 
 ## Usage
@@ -32,22 +42,20 @@ source ~/catkin_ws/devel/setup.bash
 To start the example simulation launch file, execute the following command:
 
 ~~~ sh
-roslaunch robile_ros_navigation simulation.launch
+ros2 launch robile_ros_navigation simulation.launch.py
 ~~~
 
-It will load a 3x3 ROBILE brick configuration with four active wheel with a datalogic laser scanner inside a large square room.
+It will load a 2X3 ROBILE brick configuration with four active wheel with two sick microscanners inside a large square room.
 The modification of the robot configuration and the simulation environment is explained in the tutorial section.
 
 
-For real robot example launch file, first add the sensor driver launch file to [robot.launch](examples/real_robot/launch/robot.launch?plain=1#L7).
-Then start the robile_ros_navigation with:
+For real robot example launch file execute the following command:
 
 ~~~ sh
-roslaunch robile_ros_navigation robot.launch
+ros2 launch robile_ros_navigation robot.launch.py
 ~~~
 
-The default configuration is based on 3x3 ROBILE brick configuration with four active wheel.
-Please make sure that the wheel configuration in kelo_tulip has been set properly.
+The default configuration is based on 2X3 ROBILE brick configuration with four active wheel with two sick microscanners.
 For more information on the configuration file, please read the documentation of [kelo_tulip](https://github.com/kelo-robotics/kelo_tulip).
 
 When using kelo_tulip as the driver it is also possible to drive or override the robot using a joystick.
@@ -59,39 +67,49 @@ The control is as follows:
 Note: the robot will immediately use the velocity command from ROS Navigation once the RB button was released.
 Please make sure that the navigation command has been canceled.
 
+
 ## TUTORIAL: Create a custom ROBILE platform
 
 In this section we describe the procedure to create a custom ROBILE platform configurations.
 
 ### Step-1: Create a new platform folder
 
-Here are the steps to create a new simulation platform:
-1. Copy the [gazebo_simulation](examples/gazebo_simulation) folder and rename it.
-2. Rename the simulation.launch inside the new folder to avoid name duplication.
-3. Update all file paths in simulation.launch and move_base.launch inside the new platform folder.
-
 Here are the steps to create a new real robot platform:
-1. Copy the [real_robot](examples/real_robot) folder and rename it.
-2. Rename the robot.launch inside the new folder to avoid name duplication.
-3. Update all file paths in robot.launch and move_base.launch inside the new platform folder.
+1. Copy the [4_wheel_double_microscan](examples/4_wheel_double_microscan) folder and rename it.
+2. Rename the robot.launch.py inside the new folder to avoid name duplication.
+3. Change the platform name in [robot.launch.py](examples/4_wheel_double_microscan/launch/robot.launch.py) to the new platform name.
+4. Add the new platform to the [CMakeLists.txt](CMakeLists.txt).
+
+~~~ sh
+install(DIRECTORY
+  examples/<ROBOT_NAME>/launch
+  examples/<ROBOT_NAME>/config
+  examples/<ROBOT_NAME>/map
+  examples/<ROBOT_NAME>/behavior_tree
+  DESTINATION share/${PROJECT_NAME}/examples/<ROBOT_NAME>
+)
+~~~
+
+5. When needed, replace the [lidar.launch.py](examples/4_wheel_double_microscan/launch/lidar.launch.py) with the correct lidar driver.
 
 ### Step-2: Build a custom ROBILE model
 
 Here are the steps to create a custom ROBILE model:
-1. Please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robotics/robile_gazebo) tutorial to create the custom ROBILE model.
-2. Once the new model is created, update the "platform_name" argument in simulation.launch and make sure that the parameters in the configuration files matched the model.
-3. Replace the xacro file used by "robot_description" in robot.launch or simulation.launch inside the new platform folder with the custom ROBILE xacro file created in Step-2.
+1. Please follow the [Building a custom ROBILE platform configuration](https://github.com/kelo-robotics/robile_description) tutorial in robile_description package.
+2. For simulation please follow the [Adding a custom ROBILE platform](https://github.com/kelo-robotics/robile_gazebo) tutorial in robile_gazebo package.
+3. Once the new model is created save the xacro file inside [robots](https://github.com/kelo-robotics/robile_description.git/robots) folder.
+4. Update the "model_file" argument in the new [robot.launch.py](examples/4_wheel_double_microscan/launch/robot.launch.py) file in robile_ros_navigation with the correct file name.
 
 ### Step-3: Add sensors on the robot model
 
 Here are the steps needed to add a new sensor to the robot model:
-1. Copy the sensor xacro file to desired ros package. The default location file used in the example is in [robile_description/urdf/sensors](https://github.com/kelo-robotics/robile_description.git/urdf/sensors).
-2. Add the sensor to the custom ROBILE xacro file created at Step-1. [4_wheel_lidar_config.urdf.xacro](https://github.com/kelo-robotics/robile_description.git/robots/4_wheel_lidar_config.urdf.xacro) can be used as an example.
-3. Edit the [costmap_common_params.yaml](config/costmap_common_params.yaml) so it uses the correct sensor configuration.
+1. Copy the sensor file to the desired directory. The default location file used in the example is in [robile_description/urdf/sensors](https://github.com/kelo-robotics/robile_description.git/urdf/sensors).
+2. Add the sensor to the custom ROBILE xacro file created at Step-1. [4_wheel_double_microscan_config.urdf.xacro](https://github.com/kelo-robotics/robile_description.git/robots/4_wheel_double_microscan_config.urdf.xacro) can be used as an example.
+3. Create a new launch file for the lidars and replace the default lidar launch file inside [bringup.launch.py]((examples/4_wheel_double_microscan/launch/bringup.launch.py).
 
 ### Step-4: Update the robot footprint
 
-Update the footprint of the robot in move_base_params.yaml inside the config folder so it fits the custom ROBILE platform.
+Update the footprint of the robot in [planner_server.yaml](examples/4_wheel_double_microscan/config/planner_server.yaml) and [controller_server.yaml](examples/4_wheel_double_microscan/config/controller_server.yaml) so it fits the custom ROBILE platform.
 As a convention, the front side of the robot is the positive x-axis and the left side of the robot is the positive y-axis.
 The footprint consists of a series of points (x, y) which are ordered sequentially.
 
@@ -100,7 +118,7 @@ The footprint consists of a series of points (x, y) which are ordered sequential
 ### Step-1: Create a 2D map of the new environment
 
 Please follow the tutorial for [creating a 2D map using gmapping from a recorded bagfile](http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData).
-Once the map is created, copy the yaml and pgm file to the map folder.
+Once the map is created, copy the yaml and pgm file to the [map](examples/4_wheel_double_microscan/map) folder.
 
 ### Step-2: Create xacro and stl file of the map (Simulation only)
 
@@ -123,8 +141,6 @@ Then copy the empty.xacro file inside the new platform folder and rename it with
 
 ### Step-3: Change the loaded map in the launch file
 
-For real robot simply update the "map" argument in robot.launch to use the new map.
-Meanwhile for simulation, update "world_model_name" argument in simulation.launch.
-
+Change the map name in [robot.launch.py](examples/4_wheel_double_microscan/launch/robot.launch.py) to the new map name.
 
 
