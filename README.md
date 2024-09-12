@@ -9,6 +9,7 @@ Here are the required packages for robile_ros_navigation package:
 - robile_gazebo
 - kelo_tulip
 - sick_microscanner2
+- slam_toolbox
 - ira_laser_tools
 - joy
 
@@ -17,6 +18,7 @@ First install the robile packages and ira_laser_tools from github by replacing <
 ~~~ sh
 cd <WORKSPACE_DIR>/src
 git clone -b humble https://github.com/nakai-omer/ira_laser_tools.git
+git clone -b ros2 https://github.com/SteveMacenski/slam_toolbox.git
 git clone https://github.com/kelo-robotics/robile_description.git
 git clone -b ros2-develop https://github.com/kelo-robotics/kelo_tulip.git
 git clone -b ros2-develop https://github.com/kelo-robotics/robile_gazebo.git
@@ -117,7 +119,24 @@ The footprint consists of a series of points (x, y) which are ordered sequential
 
 ### Step-1: Create a 2D map of the new environment
 
-Please follow the tutorial for [creating a 2D map using gmapping from a recorded bagfile](http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData).
+The 2D map can be created by using a SLAM algorithm. First launch the bringup launch file so the sensor and drive system are active.
+
+~~~ sh
+ros2 launch robile_ros_navigation bringup.launch.py
+~~~
+
+On another terminal start the SLAM algorithm:
+
+~~~ sh
+ros2 launch slam_toolbox online_async_launch.py
+~~~
+
+And then run the following command to save the current map as a file:
+
+~~~ sh
+    ros2 run nav2_map_server map_saver_cli -f ~/map
+~~~
+
 Once the map is created, copy the yaml and pgm file to the [map](examples/4_wheel_double_microscan/map) folder.
 
 ### Step-2: Create xacro and stl file of the map (Simulation only)
