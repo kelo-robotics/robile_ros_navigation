@@ -1,6 +1,6 @@
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
-from launch.substitutions import PathJoinSubstitution, LaunchConfiguration, TextSubstitution
+from launch.substitutions import PathJoinSubstitution, TextSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -12,15 +12,15 @@ def generate_launch_description():
     # Configuration
     platform_name = '4_wheel_double_microscan'
     model_file = '4_wheel_double_microscan_config.urdf.xacro'
-    map_name = 'empty.yaml'
+    map_name = 'office.yaml'
     use_sim_time = 'false'
     
-    map_file_path = os.path.join(get_package_share_directory('robile_ros_navigation'), 'examples', platform_name, 'map', map_name)
-    model_path = os.path.join(get_package_share_directory('robile_description'), 'robots', model_file)
     package_share = FindPackageShare(package='robile_ros_navigation').find('robile_ros_navigation')
+    map_file_path = os.path.join(package_share, 'examples', platform_name, 'map', map_name)
     config_dir = os.path.join(package_share, 'examples', platform_name, 'config')
     launch_dir = os.path.join(package_share, 'examples', platform_name, 'launch')
     bt_dir = os.path.join(package_share, 'examples', platform_name, 'behavior_tree')
+    model_path = os.path.join(get_package_share_directory('robile_description'), 'robots', model_file)
     
     # Robot bringup
     bringup_launch = IncludeLaunchDescription(
@@ -31,10 +31,10 @@ def generate_launch_description():
             ])
         ]),
         launch_arguments={
-            'config_dir': TextSubstitution(text=str(config_dir)),
-            'launch_dir': TextSubstitution(text=str(launch_dir)),
-            'model_path': TextSubstitution(text=str(model_path)),
-            'use_sim_time': TextSubstitution(text=str(use_sim_time))
+            'config_dir': config_dir,
+            'launch_dir': launch_dir,
+            'model_path': model_path,
+            'use_sim_time': use_sim_time
         }.items()
     )
 
@@ -55,8 +55,8 @@ def generate_launch_description():
             ])
         ]),
         launch_arguments={
-            'config_dir': TextSubstitution(text=str(config_dir)),
-            'use_sim_time': TextSubstitution(text=str(use_sim_time))
+            'config_dir': config_dir,
+            'use_sim_time': use_sim_time
         }.items()
     )
 
@@ -69,9 +69,9 @@ def generate_launch_description():
             ])
         ]),
         launch_arguments={
-            'config_dir': TextSubstitution(text=str(config_dir)),
-            'bt_dir': TextSubstitution(text=str(bt_dir)),
-            'use_sim_time': TextSubstitution(text=str(use_sim_time))
+            'config_dir': config_dir,
+            'bt_dir': bt_dir,
+            'use_sim_time': use_sim_time
         }.items()
     )
     
@@ -81,7 +81,7 @@ def generate_launch_description():
         executable='lifecycle_manager',
         name='lifecycle_manager',
         output='screen',
-        emulate_tty=True,  
+        emulate_tty=True,
         parameters=[{'use_sim_time': False},
                     {'autostart': True},
                     {'node_names': ['amcl_node', 'map_server', 'bt_navigator', 'planner_server', 'controller_server', 'behavior_server', 'velocity_smoother']}]

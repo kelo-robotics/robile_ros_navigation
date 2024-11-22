@@ -31,25 +31,15 @@ Next install the remaining dependencies using rosdep:
 rosdep install --from-paths src -y --ignore-src
 ~~~
 
-Finally compile the packages inside the ros workspace with the following commands by replacing <WORKSPACE_DIR> with the correct ros workspace path: 
+Finally compile the packages inside the ros workspace with the following commands by replacing <WORKSPACE> with the correct ros workspace path: 
 
 ~~~ sh
-cd <WORKSPACE_DIR>
+cd <WORKSPACE>
 colcon build
 source ~/<WORKSPACE>/install/local_setup.bash
 ~~~
 
 ## Usage
-
-To start the example simulation launch file, execute the following command:
-
-~~~ sh
-ros2 launch robile_ros_navigation simulation.launch.py
-~~~
-
-It will load a 2X3 ROBILE brick configuration with four active wheel with two sick microscanners inside a large square room.
-The modification of the robot configuration and the simulation environment is explained in the tutorial section.
-
 
 For real robot example launch file execute the following command:
 
