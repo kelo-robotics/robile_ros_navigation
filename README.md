@@ -1,6 +1,6 @@
 # robile_ros_navigation
 
-ROS Navigation for KELO ROBILE robots
+ROS Navigation for KELO ROBILE robots. For ROS2 version please check the documentation on ros2-develop branch
 
 ## Installation
 Here are the required packages for robile_ros_navigation package:
