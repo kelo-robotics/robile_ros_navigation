@@ -17,13 +17,13 @@ include_directories(
 )
 
 # Install launch files
-install(DIRECTORY
-  examples/4_wheel_double_microscan/launch
-  examples/4_wheel_double_microscan/config
-  examples/4_wheel_double_microscan/map
-  examples/4_wheel_double_microscan/behavior_tree
-  DESTINATION share/${PROJECT_NAME}/examples/4_wheel_double_microscan
-)
+#install(DIRECTORY
+#  examples/4_wheel_double_microscan/launch
+#  examples/4_wheel_double_microscan/config
+#  examples/4_wheel_double_microscan/map
+#  examples/4_wheel_double_microscan/behavior_tree
+#  DESTINATION share/${PROJECT_NAME}/examples/4_wheel_double_microscan
+#)
 
 #install(DIRECTORY
   #examples/<ROBOT_NAME>/launch
