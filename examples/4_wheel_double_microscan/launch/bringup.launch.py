@@ -53,6 +53,7 @@ def generate_launch_description():
         ]),
         launch_arguments={
             'config_dir': config_dir,
+            'launch_dir': launch_dir,
             'use_sim_time': use_sim_time
         }.items()
     )

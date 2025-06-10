@@ -9,7 +9,9 @@ def generate_launch_description():
     # Declare the launch arguments
     config_dir = LaunchConfiguration('config_dir')
     config_dir_arg = DeclareLaunchArgument('config_dir', default_value='')
-
+    launch_dir = LaunchConfiguration('launch_dir')
+    launch_dir_arg = DeclareLaunchArgument('launch_dir', default_value='')
+    
     # Create the scanners node
     scanner1_node = Node(
         package='sick_safetyscanners2',
@@ -65,6 +67,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         config_dir_arg,
+        launch_dir_arg,
         scanner1_node,
         scanner2_node,
         merger_node
