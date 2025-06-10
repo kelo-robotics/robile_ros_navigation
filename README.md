@@ -52,9 +52,9 @@ For using the provided 4\_wheel\_double\_microscan example, uncomment the instal
 Finally compile the packages inside the ros workspace with the following commands by replacing <WORKSPACE> with the correct ros workspace path: 
 
 ~~~ sh
-cd <WORKSPACE>
+cd <WORKSPACE_DIR>
 colcon build --symlink-install
-source ~/<WORKSPACE>/install/local_setup.bash
+source ~/<WORKSPACE_DIR>/install/local_setup.bash
 ~~~
 
 ## Usage
@@ -104,6 +104,7 @@ install(DIRECTORY
 6. Compile 
 
 ~~~ sh
+cd <WORKSPACE_DIR>
 colcon build --symlink-install
 ~~~
 
