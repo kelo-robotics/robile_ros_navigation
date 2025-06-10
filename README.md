@@ -6,7 +6,6 @@ For ROS 1 version please read the README.md file in the master branch.
 ## Installation
 Here are the required packages for robile_ros_navigation package:
 - ROS 2 Navigation
-- robile_gazebo
 - kelo_tulip
 - sick_microscanner2
 - slam_toolbox
@@ -18,24 +17,43 @@ First install the robile packages and ira_laser_tools from github by replacing <
 ~~~ sh
 cd <WORKSPACE_DIR>/src
 git clone -b humble https://github.com/nakai-omer/ira_laser_tools.git
-git clone -b ros2 https://github.com/SteveMacenski/slam_toolbox.git
 git clone https://github.com/kelo-robotics/robile_description.git
 git clone -b ros2-develop https://github.com/kelo-robotics/kelo_tulip.git
-git clone -b ros2-develop https://github.com/kelo-robotics/robile_gazebo.git
 git clone -b ros2-develop https://github.com/kelo-robotics/robile_ros_navigation.git
+~~~
+
+Before running the following command, make sure you have initialized and updated rosdep:
+
+~~~ sh
+sudo rosdep init   # Only needed once
+rosdep update
 ~~~
 
 Next install the remaining dependencies using rosdep:
 
 ~~~ sh
+cd <WORKSPACE_DIR>/
 rosdep install --from-paths src -y --ignore-src
+~~~
+
+For using the provided 4\_wheel\_double\_microscan example, uncomment the install command inside [CMakeLists.txt](CMakeLists.txt):
+
+~~~ sh
+# Install launch files
+#install(DIRECTORY
+#  examples/4_wheel_double_microscan/launch
+#  examples/4_wheel_double_microscan/config
+#  examples/4_wheel_double_microscan/map
+#  examples/4_wheel_double_microscan/behavior_tree
+#  DESTINATION share/${PROJECT_NAME}/examples/4_wheel_double_microscan
+#)
 ~~~
 
 Finally compile the packages inside the ros workspace with the following commands by replacing <WORKSPACE> with the correct ros workspace path: 
 
 ~~~ sh
 cd <WORKSPACE>
-colcon build
+colcon build --symlink-install
 source ~/<WORKSPACE>/install/local_setup.bash
 ~~~
 
@@ -70,7 +88,7 @@ Here are the steps to create a new real robot platform:
 1. Copy the [4_wheel_double_microscan](examples/4_wheel_double_microscan) folder and rename it.
 2. Rename the robot.launch.py inside the new folder to avoid name duplication.
 3. Change the platform name in [robot.launch.py](examples/4_wheel_double_microscan/launch/robot.launch.py) to the new platform name.
-4. Add the new platform to the [CMakeLists.txt](CMakeLists.txt).
+4. Add the new platform to the [CMakeLists.txt](CMakeLists.txt) and then comment out the other examples to avoid conflicts for launch filename duplicate.
 
 ~~~ sh
 install(DIRECTORY
@@ -82,7 +100,13 @@ install(DIRECTORY
 )
 ~~~
 
-5. When needed, replace the [lidar.launch.py](examples/4_wheel_double_microscan/launch/lidar.launch.py) with the correct lidar driver.
+5. When using different lidar configuration replace the [lidar.launch.py](examples/4_wheel_double_microscan/launch/lidar.launch.py) with the correct lidar driver.
+6. Compile 
+
+~~~ sh
+colcon build --symlink-install
+~~~
+
 
 ### Step-2: Build a custom ROBILE model
 
