@@ -13,18 +13,13 @@ def generate_launch_description():
     launch_dir_arg = DeclareLaunchArgument('launch_dir', default_value='')
     
     # Create the scanners node
-    lidar_launch = IncludeLaunchDescription(
+    hokuyo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
                 launch_dir,
                 'hokuyo.launch.py'
             ])
-        ]),
-        launch_arguments={
-            'config_dir': config_dir,
-            'launch_dir': launch_dir,
-            'use_sim_time': use_sim_time
-        }.items()
+        ])
     )
 
     # Create the scan merging node
