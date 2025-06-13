@@ -1,0 +1,45 @@
+scanner_1:
+  ros__parameters:
+    sensor_ip: 192.168.1.3
+    sensor_tcp_port: 2122
+    host_ip: 192.168.1.100
+    host_udp_port: 0
+    frame_id: scanner_1_link
+    skip: 0
+    angle_start: 0.0
+#Start angle of scan in radians, if both start and end angle are equal, all angels are regarded
+    angle_end: 0.0
+#End angle of scan in radians, if both start and end angle are equal, all angels are regarded
+    channel_enabled: true
+    general_system_state: true
+    derived_settings: true
+    measurement_data: true
+    intrusion_data: true
+    application_io_data: true
+    use_sick_angles: false
+#If this flag is set, the predefined angles from SICK are used. 
+#If this flag is set to false an offset of -90\Uffffffff is added to the angles 
+#so that 0\Uffffffff is at the front of the scanner.
+
+scanner_2:
+  ros__parameters:
+    sensor_ip: 192.168.1.4
+    sensor_tcp_port: 2122
+    host_ip: 192.168.1.100
+    host_udp_port: 0
+    frame_id: scanner_2_link
+    skip: 0
+    angle_start: 0.0
+#Start angle of scan in radians, if both start and end angle are equal, all angels are regarded
+    angle_end: 0.0
+#End angle of scan in radians, if both start and end angle are equal, all angels are regarded
+    channel_enabled: true
+    general_system_state: true
+    derived_settings: true
+    measurement_data: true
+    intrusion_data: true
+    application_io_data: true
+    use_sick_angles: false
+#If this flag is set, the predefined angles from SICK are used. 
+#If this flag is set to false an offset of -90\Uffffffff is added to the angles 
+#so that 0\Uffffffff is at the front of the scanner.

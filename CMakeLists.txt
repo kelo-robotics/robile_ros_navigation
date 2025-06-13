@@ -26,6 +26,14 @@ include_directories(
 #)
 
 #install(DIRECTORY
+  #examples/4_wheel_double_uam/launch
+  #examples/4_wheel_double_uam/config
+  #examples/4_wheel_double_uam/map
+  #examples/4_wheel_double_uam/behavior_tree
+  #DESTINATION share/${PROJECT_NAME}/examples/4_wheel_double_uam
+#)
+
+#install(DIRECTORY
   #examples/<ROBOT_NAME>/launch
   #examples/<ROBOT_NAME>/config
   #examples/<ROBOT_NAME>/map
