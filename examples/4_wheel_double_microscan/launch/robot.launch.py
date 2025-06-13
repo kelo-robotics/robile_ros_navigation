@@ -102,5 +102,5 @@ def generate_launch_description():
         amcl_launch,
         navigation_launch,
         lifecycle_manager_node,
-        rviz2_node
+        #rviz2_node
     ])
