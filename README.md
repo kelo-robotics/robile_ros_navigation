@@ -7,7 +7,6 @@ For ROS 1 version please read the README.md file in the master branch.
 Here are the required packages for robile_ros_navigation package:
 - ROS 2 Navigation
 - kelo_tulip
-- sick_microscanner2
 - slam_toolbox
 - ira_laser_tools
 - joy
@@ -22,7 +21,7 @@ git clone -b ros2-develop https://github.com/kelo-robotics/kelo_tulip.git
 git clone -b ros2-develop https://github.com/kelo-robotics/robile_ros_navigation.git
 ~~~
 
-Before running the following command, make sure you have initialized and updated rosdep:
+Then install the lidar drivers for ROS2. Once everything is installed, initialize and update rosdep if you haven't done it before on your system:
 
 ~~~ sh
 sudo rosdep init   # Only needed once
