@@ -35,16 +35,16 @@ cd <WORKSPACE_DIR>/
 rosdep install --from-paths src -y --ignore-src
 ~~~
 
-For using the provided 4\_wheel\_double\_microscan example, uncomment the install command inside [CMakeLists.txt](CMakeLists.txt):
+For using the provided 4\_wheel\_double\_uam example, uncomment the install command inside [CMakeLists.txt](CMakeLists.txt):
 
 ~~~ sh
 # Install launch files
 #install(DIRECTORY
-#  examples/4_wheel_double_microscan/launch
-#  examples/4_wheel_double_microscan/config
-#  examples/4_wheel_double_microscan/map
-#  examples/4_wheel_double_microscan/behavior_tree
-#  DESTINATION share/${PROJECT_NAME}/examples/4_wheel_double_microscan
+#  examples/4_wheel_double_uam/launch
+#  examples/4_wheel_double_uam/config
+#  examples/4_wheel_double_uam/map
+#  examples/4_wheel_double_uam/behavior_tree
+#  DESTINATION share/${PROJECT_NAME}/examples/4_wheel_double_uam
 #)
 ~~~
 
