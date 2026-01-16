@@ -53,7 +53,7 @@
     </model>
     <model name="office_mesh">
       <static>true</static>
-      <pose>-1 0.5 0 0 0 0</pose>
+      <pose>-1 0.5 0 0 0 0.085</pose>
       <link name="world_link">
         <visual name="visual">
           <geometry>
